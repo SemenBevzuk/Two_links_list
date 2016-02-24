@@ -112,3 +112,46 @@ TEST(List, can_delete_by_index) { //
 	EXPECT_EQ(1, list.GetHead()->GetVar());
 	EXPECT_EQ(3, list.GetHead()->GetNext()->GetVar());
 }
+
+TEST(List, can_insert_orderedly)
+{
+	List<int> list;
+	list.Insert(1);
+	list.Insert(3);
+	list.InsertOrdered(2);
+
+	EXPECT_EQ(3, list.GetLength());
+	EXPECT_EQ(2, list.GetHead()->GetNext()->GetVar());
+}
+
+TEST(List, can_insert_orderedly_to_head) {
+	List<int> list;
+	list.Insert(3);
+	list.InsertOrdered(1);
+
+	EXPECT_EQ(2, list.GetLength());
+	EXPECT_EQ(1, list.GetHead()->GetVar());
+}
+
+TEST(List, can_insert_orderedly_to_tail) {
+	List<int> list;
+	list.Insert(1);
+	list.InsertOrdered(2);
+
+	EXPECT_EQ(2, list.GetLength());
+	EXPECT_EQ(2, list.GetHead()->GetNext()->GetVar());
+}
+
+TEST(List, can_get_value_using_brackets) {
+	List<int> list;
+	list.Insert(1);
+	list.Insert(2);
+	list.Insert(3);
+	list.Insert(4);
+
+	EXPECT_EQ(4, list.GetLength());
+	EXPECT_EQ(1, list[0]);
+	EXPECT_EQ(2, list[1]);
+	EXPECT_EQ(3, list[2]);
+	EXPECT_EQ(4, list[3]);
+}

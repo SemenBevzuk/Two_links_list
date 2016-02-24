@@ -90,7 +90,7 @@ public:
 		return current;
 	}
 
-	void InsertBeforHead(Type x) {
+	void InsertBeforHead(Type x) { 
 		if (length == 0)
 		{
 			head = new Node<Type>(x);
@@ -104,7 +104,7 @@ public:
 		}
 		length++;
 	}
-	void InserеtInTail(Type x) {
+	void InserеtInTail(Type x) { 
 		Node<Type>* current = Search(length-1);
 
 		Node<Type>* temp = new Node<Type>(x, current, NULL);
@@ -112,6 +112,7 @@ public:
 
 		length++;
 	}
+	//Вставка в указанную позицию
 	void Insert(Type x, int pos) 
 	{
 		if (pos<0) {
@@ -135,6 +136,7 @@ public:
 		temp->SetNext(current);
 		length++;
 	}
+	//Вставка элемента в конец без указания позиции
 	void Insert(Type x) {
 		if (length == 0) {
 			InsertBeforHead(x);
@@ -142,35 +144,44 @@ public:
 		}
 		InserеtInTail(x);
 	}
-
+	//Упорядоченная вставка элемнета в список
 	void InsertOrdered(Type x) { // в доработке
 		Node<Type>* current = head;
-		Node<Type>* previous = head;
+
 		Node<Type>* temp = new Node<Type>(x);
 
 		if (current == NULL) {
-			AddToHead(x);
+			Insert(x);
 			return;
 		}
-		if (x > current->GetVar())
+		if (x < current->GetVar())
 		{
-			AddToHead(x);
+			InsertBeforHead(x);
 			return;
 		}
-		if (x< tail->GetVar()) {
-			AddToTail(x);
-			return;
-		}
-		while (x < current->GetVar())
+
+		while (x > current->GetVar())
 		{
-			previous = current;
 			current = current->GetNext();
+			if (current == NULL)
+			{
+				InserеtInTail(x);
+				return;
+			}
 		}
 		
-		previous->SetNext(temp);
+		current->GetPrevious()->SetNext(temp);
+		temp->SetPrevious(current->GetPrevious());
 		temp->SetNext(current);
+		current->SetPrevious(temp);
 
 		length++;
+	}
+
+	Type operator[](int n)
+	{
+		Node<Type>* temp = Search(n);
+		return temp->GetVar();
 	}
 
 	void DeleteFirst() {
